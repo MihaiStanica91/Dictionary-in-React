@@ -1,3 +1,6 @@
+# My first project using React.js
+ Using this app, you can add new words to a dictionary and afterward you can check if the desired word exists in this dictionary.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
