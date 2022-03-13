@@ -1,45 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-class WordInput extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          value: "",
-          messsage: "",
-        };
+function WordInput(props) {
+    const [word, addWord] = useState("");
+    const [message, setMessage] = useState("");
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
-    handleSubmit(event) {
-        if (this.state.value === "") {
-            this.setState({ messsage: "Please add a word to dictionary!" });
+    const addNewWord = (e) => {
+        if(props.list.includes(word) === false && word !== "") {
+            props.list.push(word);
+            setMessage("Word added successfully!");
+            setTimeout(() => {setMessage("Please type a new word!")}, 2000);
+        } else if(props.list.includes(word) === true && word !== "") {
+            setMessage("Word already exists in dictionary!");
+            setTimeout(() => {setMessage("Please type a new word!")}, 2000);
         } else {
-            this.props.list.push(this.state.value);
-            this.setState({ messsage: "Word added successfully!" });
+            setMessage("Please add a valid word!");
         }
-        event.preventDefault();
+        e.preventDefault();
     }
 
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                  <label>
-                    Word:
-                      <input style={{marginLeft: "5px"}} type="text" value={this.state.value} onChange={this.handleChange} />
-                  </label>
-                  <button className="btn-outline-primary" style={{marginLeft: "5px"}} type="submit">Add Word!</button>
-                </form>
-                <p style={{marginTop: "5px", textAlign: "center"}}>{this.state.messsage}</p>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <form onSubmit={addNewWord}>
+                <label>
+                Word:
+                    <input style={{marginLeft: "5px"}} type="text" value={word} onChange={(e) => {addWord(e.target.value)}} />
+                </label>
+                <button className="btn-outline-primary" style={{marginLeft: "5px"}} type="submit">Add Word!</button>
+            </form>
+            <p style={{marginTop: "5px", textAlign: "center"}}>{message}</p>
+        </div>
+    );
 }
 export default WordInput;

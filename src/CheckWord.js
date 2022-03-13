@@ -1,45 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-class CheckWord extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: "",
-            message: "",
-        };
+function CheckWord(props) {
+    const [word, searchWord] = useState("");
+    const [message, setMessage] = useState("");
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
-    handleSubmit(event) {
-        if (this.props.list.includes(this.state.value) === true) {
-            this.setState({ messsage: "Word exists in dictionary!" });
+    const searchNewWord = (e) => {
+        if(props.list.includes(word) === true) {
+            setMessage("Word exists in dictionary!");
+            setTimeout(() => {setMessage("Check a new word!")}, 2000);
         } else {
-            this.setState({ messsage: "Word doesn't exists in dictionary! You can add it!" });
+            setMessage("Word doesn't exists in dictionary! You can add it!");
         }
-        event.preventDefault();
+        e.preventDefault();
     }
 
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Word:
-                    <input style={{marginLeft: "5px"}} type="text" value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <button className="btn-outline-primary" style={{marginLeft: "5px"}} type="submit">Check Word!</button>
-                </form>
-                <p style={{marginTop: "5px", textAlign: "center"}}>{this.state.messsage}</p>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <form onSubmit={searchNewWord}>
+                <label>
+                    Word:
+                <input style={{marginLeft: "5px"}} type="text" value={word} onChange={(e) => {searchWord(e.target.value)}} />
+                </label>
+                <button className="btn-outline-primary" style={{marginLeft: "5px"}} type="submit">Check Word!</button>
+            </form>
+            <p style={{marginTop: "5px", textAlign: "center"}}>{message}</p>
+        </div>
+    );
 }
 
 export default CheckWord;
