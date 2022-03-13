@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-function CheckWord(props) {
+function CheckWord({list}) {
     const [word, searchWord] = useState("");
     const [message, setMessage] = useState("");
 
     const searchNewWord = (e) => {
-        if(props.list.includes(word) === true) {
+        if(list.includes(word) === true) {
             setMessage("Word exists in dictionary!");
             setTimeout(() => {setMessage("Check a new word!")}, 2000);
         } else {

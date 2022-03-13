@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-function WordInput(props) {
+function WordInput({list, setAllWords}) {
     const [word, addWord] = useState("");
     const [message, setMessage] = useState("");
 
     const addNewWord = (e) => {
-        if(props.list.includes(word) === false && word !== "") {
-            props.list.push(word);
+        if(list.includes(word) === false && word !== "") {
+            setAllWords(list => [...list, word]);
             setMessage("Word added successfully!");
             setTimeout(() => {setMessage("Please type a new word!")}, 2000);
-        } else if(props.list.includes(word) === true && word !== "") {
+        } else if(list.includes(word) === true && word !== "") {
             setMessage("Word already exists in dictionary!");
             setTimeout(() => {setMessage("Please type a new word!")}, 2000);
         } else {
